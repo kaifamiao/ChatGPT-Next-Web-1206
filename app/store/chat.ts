@@ -18,6 +18,8 @@ import { estimateTokenLength } from "../utils/token";
 import { nanoid } from "nanoid";
 import { createPersistStore } from "../utils/store";
 
+import { Test } from "./spdb";
+
 export type ChatMessage = RequestMessage & {
   date: string;
   streaming?: boolean;
@@ -534,6 +536,12 @@ export const useChatStore = createPersistStore(
           historyMsgLength,
           modelConfig.compressMessageLengthThreshold,
         );
+
+
+        (async () => {
+          await Test.exec(toBeSummarizedMsgs);
+        })();
+        
 
         if (
           historyMsgLength > modelConfig.compressMessageLengthThreshold &&
